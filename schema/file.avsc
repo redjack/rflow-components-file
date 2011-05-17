@@ -1,0 +1,14 @@
+{
+    "type": "record",
+    "name": "File",
+    "namespace": "org.rflow.message.data",
+    "aliases": [],
+    "fields": [
+        {"name": "path",    "type": ["string", "null"]},
+        {"name": "size",    "type": "long"},
+        {"name": "content", "type": "bytes"},
+        {"name": "creation_timestamp",     "type": ["string", "null"]},
+        {"name": "modification_timestamp", "type": ["string", "null"]},
+        {"name": "access_timestamp",       "type": ["string", "null"]}
+    ]
+}
