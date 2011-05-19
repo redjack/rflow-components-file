@@ -7,9 +7,12 @@ describe 'RFlow::Message::Data::File Avro Schema' do
   
   it "should encode and decode an object" do
     file = {
-      'path' => '/full/file/path',
+      'path' => '/full/file/path/filename',
       'size' => 1,
-      'content' => 'CONTENT'
+      'content' => 'CONTENT',
+      'creation_timestamp' => 'CREATEDTIMESTRING',
+      'modification_timestamp' => 'MODIFIEDTIMESTRING',
+      'access_timestamp' => 'ACCESSEDTIMESTRING'
     }
 
     expect {encode_avro(@schema_string, file)}.to_not raise_error

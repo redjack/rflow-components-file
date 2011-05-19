@@ -1,4 +1,5 @@
 require 'rflow/components/file/extensions'
+require 'rflow/components/file/directory_poller'
 
 class RFlow
   module Components
@@ -16,6 +17,8 @@ class RFlow
       end
 
       # Load the data extensions
+      RFlow::Configuration.add_available_data_extension('RFlow::Message::Data::File',
+                                                        RFlow::Components::File::Extensions::FileExtension)
 
     end
   end
