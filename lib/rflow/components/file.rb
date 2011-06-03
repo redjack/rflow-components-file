@@ -1,5 +1,6 @@
 require 'rflow/components/file/extensions'
-require 'rflow/components/file/directory_poller'
+require 'rflow/components/file/directory_watcher'
+require 'rflow/components/file/output_raw_to_files'
 
 class RFlow
   module Components

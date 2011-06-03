@@ -2,7 +2,7 @@ class RFlow
   module Components
     module File
       
-      # The set of extensions to add capability to HTTP data types
+      # The set of extensions to add capability to File data types
       module Extensions
         
         # Need to be careful when extending to not clobber data already in data_object
