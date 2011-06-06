@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = "rflow-components-file"
   s.version     = RFlow::Components::File::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.required_ruby_version = '1.9.2'
+  s.required_ruby_version = '~> 1.9'
   s.authors     = ["Michael L. Artz"]
   s.email       = ["michael.artz@redjack.com"]
   s.homepage    = ""
