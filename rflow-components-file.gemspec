@@ -1,16 +1,17 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "rflow-components-file/version"
+require "rflow/components/file/version"
 
 Gem::Specification.new do |s|
   s.name        = "rflow-components-file"
-  s.version     = Rflow::Components::File::VERSION
+  s.version     = RFlow::Components::File::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.required_ruby_version = '~> 1.9'
+  s.authors     = ["Michael L. Artz"]
+  s.email       = ["michael.artz@redjack.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Components that operate on files for the RFlow FBP framework}
+  s.description = %q{Components that operate on files for the RFlow FBP framework.  Also includes the File schema}
 
   s.rubyforge_project = "rflow-components-file"
 
@@ -18,4 +19,10 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_dependency 'rflow', '~> 0.0'
+  s.add_dependency 'eventmachine_httpserver', '~> 0.2'
+
+  s.add_development_dependency 'rspec', '~> 2.6'
+  s.add_development_dependency 'rake', '~> 0.8'
 end
