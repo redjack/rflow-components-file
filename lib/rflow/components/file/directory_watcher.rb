@@ -55,14 +55,14 @@ class RFlow
                 RFlow.logger.debug "read #{file_content.bytesize} bytes of #{file.size} in #{file.path}, md5 #{Digest::MD5.hexdigest(file_content)}"
 
                 file_message = RFlow::Message.new('RFlow::Message::Data::File')
-                file_message.data.data_object = {
-                  'path' => ::File.expand_path(file.path),
-                  'size' => file.size,
-                  'content' => file_content,
-                  'creation_timestamp' => file.ctime,
-                  'modification_timestamp' => file.mtime,
-                  'access_timestamp' => file.atime,
-                }
+
+                file_message.data.path = ::File.expand_path(file.path)
+                file_message.data.size = file.size
+                file_message.data.content = file_content
+                file_message.data.creation_timestamp = file.ctime
+                file_message.data.modification_timestamp = file.mtime
+                file_message.data.access_timestamp = file.atime
+                
                 file_port.send_message file_message
 
                 raw_message = RFlow::Message.new('RFlow::Message::Data::Raw')

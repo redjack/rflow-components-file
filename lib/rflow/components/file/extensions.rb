@@ -10,7 +10,7 @@ class RFlow
           def self.extended(base_data)
             base_data.data_object ||= {
               'path' => '/', 'size' => 0, 'content' => '',
-              'creation_timestamp' => nil, 'modification_timestamp' => nil, 'accessed_timestamp' => nil
+              'creation_timestamp' => nil, 'modification_timestamp' => nil, 'access_timestamp' => nil
             }
           end
           
@@ -38,7 +38,7 @@ class RFlow
           # XMLTimestamp is set to 9 digits, meaning that the time you
           # put in might be slightly different from the time you read
           # out.
-          ['creation_timestamp', 'modification_timestamp', 'accessed_timestamp'].each do |name|
+          ['creation_timestamp', 'modification_timestamp', 'access_timestamp'].each do |name|
             define_method name do |*args|
               data_object[name] ? Time.xmlschema(data_object[name]) : nil
             end
