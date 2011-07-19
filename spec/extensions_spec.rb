@@ -19,7 +19,7 @@ describe RFlow::Components::File::Extensions::FileExtension do
     file.data.content.should == ''
     file.data.creation_timestamp.should == nil
     file.data.modification_timestamp.should == nil
-    file.data.accessed_timestamp.should == nil
+    file.data.access_timestamp.should == nil
   end
 
   it "should correctly use integers or strings for size field" do
