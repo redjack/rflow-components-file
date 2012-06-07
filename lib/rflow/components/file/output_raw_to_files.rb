@@ -38,8 +38,6 @@ class RFlow
           RFlow.logger.debug "Outputting raw message to file"
           RFlow.logger.debug "Raw data is #{message.data.raw.bytesize} bytes with md5 #{Digest::MD5.hexdigest message.data.raw}"
           
-          p message.data.raw.encoding
-          
           @output_file_entropy = 0
           begin
             final_output_file_name = output_file_name
