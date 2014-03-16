@@ -1,6 +1,6 @@
 require 'bundler'
 require 'rspec/core/rake_task'
-require 'rake/rdoctask'
+require 'rdoc/task'
 Bundler::GemHelper.install_tasks
 
 RSpec::Core::RakeTask.new(:spec) do |t|
@@ -13,4 +13,3 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("README", "lib/**/*.rb")
   rd.rdoc_dir = File.join('doc', 'html')
 end
-

@@ -10,7 +10,7 @@ describe RFlow::Components::File::Extensions::FileExtension do
   it "should add the extension to RFlow::Configuration" do
     RFlow::Configuration.available_data_extensions['RFlow::Message::Data::File'].should include(described_class)
   end
-  
+
   it "should set the defaults" do
     file = RFlow::Message.new('RFlow::Message::Data::File')
 
@@ -45,5 +45,5 @@ describe RFlow::Components::File::Extensions::FileExtension do
     file.data.creation_timestamp.should == Time.xmlschema(now.xmlschema)
   end
 
-  
+
 end

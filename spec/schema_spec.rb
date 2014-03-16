@@ -4,7 +4,7 @@ describe 'RFlow::Message::Data::File Avro Schema' do
   before(:each) do
     @schema_string = RFlow::Configuration.available_data_types['RFlow::Message::Data::File']['avro']
   end
-  
+
   it "should encode and decode an object" do
     file = {
       'path' => '/full/file/path/filename',

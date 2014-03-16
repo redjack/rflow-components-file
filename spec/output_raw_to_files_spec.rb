@@ -14,10 +14,10 @@ describe RFlow::Components::File::OutputRawToFiles do
 
     message = RFlow::Message.new('RFlow::Message::Data::Raw')
     message.data.raw = 'boomertown'
-    
+
     output_file_path = component.process_message nil, nil, nil, message
 
     File.exist?(output_file_path).should be_true
   end
-  
+
 end

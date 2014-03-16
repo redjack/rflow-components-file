@@ -8,7 +8,7 @@ class RFlow
       class DirectoryWatcher < RFlow::Component
         output_port :file_port
         output_port :raw_port
-        
+
         DEFAULT_CONFIG = {
           'directory_path'  => '/tmp/import',
           'file_name_glob'  => '*',
@@ -18,7 +18,7 @@ class RFlow
         }
 
         attr_accessor :config, :poll_interval, :directory_path, :file_name_glob, :remove_files
-        
+
         def configure!(config)
           @config = DEFAULT_CONFIG.merge config
           @directory_path  = ::File.expand_path(@config['directory_path'])
@@ -26,11 +26,11 @@ class RFlow
           @poll_interval   = @config['poll_interval'].to_i
           @files_per_poll  = @config['files_per_poll'].to_i
           @remove_files    = to_boolean(@config['remove_files'])
-          
+
           unless ::File.directory?(@directory_path)
             raise ArgumentError, "Invalid directory '#{@directory_path}'"
           end
-          
+
           unless ::File.readable?(@directory_path)
             raise ArgumentError, "Unable to read from directory '#{@directory_path}'"
           end
@@ -51,7 +51,7 @@ class RFlow
               RFlow.logger.debug "Importing #{file_path}"
               ::File.open(file_path, 'r:BINARY') do |file|
                 file_content = file.read
-                
+
                 RFlow.logger.debug "read #{file_content.bytesize} bytes of #{file.size} in #{file.path}, md5 #{Digest::MD5.hexdigest(file_content)}"
 
                 file_message = RFlow::Message.new('RFlow::Message::Data::File')
@@ -62,7 +62,7 @@ class RFlow
                 file_message.data.creation_timestamp = file.ctime
                 file_message.data.modification_timestamp = file.mtime
                 file_message.data.access_timestamp = file.atime
-                
+
                 file_port.send_message file_message
 
                 raw_message = RFlow::Message.new('RFlow::Message::Data::Raw')
@@ -88,7 +88,7 @@ class RFlow
             raise ArgumentError, "'#{string}' cannot be coerced to a boolean value"
           end
         end
-        
+
       end
     end
   end

@@ -1,10 +1,10 @@
 class RFlow
   module Components
     module File
-      
+
       # The set of extensions to add capability to File data types
       module Extensions
-        
+
         # Need to be careful when extending to not clobber data already in data_object
         module FileExtension
           def self.extended(base_data)
@@ -13,7 +13,7 @@ class RFlow
               'creation_timestamp' => nil, 'modification_timestamp' => nil, 'access_timestamp' => nil
             }
           end
-          
+
           # Default/string accessors
           ['path', 'content'].each do |name|
             define_method name do |*args|
@@ -23,7 +23,7 @@ class RFlow
               data_object[name] = args.first
             end
           end
-          
+
           # Integer Accessors
           ['size'].each do |name|
             define_method name do |*args|
@@ -33,7 +33,7 @@ class RFlow
               data_object[name] = args.first.to_i
             end
           end
-          
+
           # Timestamp Accessors.  Note, the precision of the
           # XMLTimestamp is set to 9 digits, meaning that the time you
           # put in might be slightly different from the time you read

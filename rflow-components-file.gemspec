@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '~> 1.9'
   s.authors     = ["Michael L. Artz"]
   s.email       = ["michael.artz@redjack.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/redjack/rflow-components-file"
   s.summary     = %q{Components that operate on files for the RFlow FBP framework}
   s.description = %q{Components that operate on files for the RFlow FBP framework.  Also includes the File schema}
 
@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'rflow', '~> 0.0'
-  s.add_dependency 'eventmachine_httpserver', '~> 0.2'
 
   s.add_development_dependency 'rspec', '~> 2.6'
   s.add_development_dependency 'rake', '~> 0.8'
