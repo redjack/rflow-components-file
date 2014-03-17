@@ -9,7 +9,7 @@ RSpec::Core::RakeTask.new(:spec) do |t|
 end
 
 Rake::RDocTask.new do |rd|
-  rd.main = "README"
-  rd.rdoc_files.include("README", "lib/**/*.rb")
+  rd.main = "README.md"
+  rd.rdoc_files.include("README.md", "lib/**/*.rb")
   rd.rdoc_dir = File.join('doc', 'html')
 end

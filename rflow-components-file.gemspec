@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Michael L. Artz"]
   s.email       = ["michael.artz@redjack.com"]
   s.homepage    = "https://github.com/redjack/rflow-components-file"
+  s.license     = "Apache-2.0"
   s.summary     = %q{Components that operate on files for the RFlow FBP framework}
   s.description = %q{Components that operate on files for the RFlow FBP framework.  Also includes the File schema}
 
