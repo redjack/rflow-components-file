@@ -2,16 +2,29 @@ require 'spec_helper.rb'
 
 describe RFlow::Components::File::OutputRawToFiles do
 
+  before(:each) do
+  end
+
+  let :component_config do
+    OpenStruct.new(:name         => 'port name',
+                   :uuid         => 0,
+                   :input_ports  => [],
+                   :output_ports => [],
+                   :options      => {
+                     'file_name_prefix' => 'boom',
+                     'file_name_suffix' => '.town',
+                     'directory_path'   => '/tmp'})
+  end
+
+  let :component do
+    described_class.new(component_config)
+  end
+
   it "should correctly process file name prefix/suffix" do
-    component = described_class.new(1)
-    component.configure!('file_name_prefix' => 'boom', 'file_name_suffix' => 'town', 'directory_path' => '/tmp')
-    component.send(:output_file_name).should match(/boom.*0001town/)
+    component.send(:output_file_name).should match(/boom.*0001.town/)
   end
 
   it "should do stuff" do
-    component = described_class.new(1)
-    component.configure!('file_name_prefix' => 'boom.', 'file_name_suffix' => '.town', 'directory_path' => '/tmp')
-
     message = RFlow::Message.new('RFlow::Message::Data::Raw')
     message.data.raw = 'boomertown'
 
