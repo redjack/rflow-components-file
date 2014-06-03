@@ -1,4 +1,4 @@
-require 'spec_helper.rb'
+require 'spec_helper'
 
 describe RFlow::Components::File::OutputRawToFiles do
 
@@ -30,7 +30,7 @@ describe RFlow::Components::File::OutputRawToFiles do
 
     output_file_path = component.process_message nil, nil, nil, message
 
-    File.exist?(output_file_path).should be_true
+    File.exist?(output_file_path).should be true
   end
 
 end
