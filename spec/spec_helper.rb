@@ -3,6 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'rflow-c
 require 'logger'
 
 RFlow.logger = Logger.new STDOUT
+RFlow.logger.level = 5
 
 def decode_avro(schema_string, serialized_object)
   schema = Avro::Schema.parse(schema_string)
