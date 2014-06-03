@@ -23,6 +23,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rflow', '~> 1.0.0a1'
 
-  s.add_development_dependency 'rspec', '~> 2.6'
+  s.add_development_dependency 'rspec', '~> 2.99'
   s.add_development_dependency 'rake', '~> 0.8'
 end
