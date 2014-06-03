@@ -5,10 +5,9 @@ require 'logger'
 RFlow.logger = Logger.new STDOUT
 RFlow.logger.level = 5
 
-def decode_avro(schema_string, serialized_object)
+def decode_avro(schema_string, data)
   schema = Avro::Schema.parse(schema_string)
-  sio = StringIO.new(serialized_object)
-  Avro::IO::DatumReader.new(schema, schema).read Avro::IO::BinaryDecoder.new(sio)
+  Avro::IO::DatumReader.new(schema, schema).read Avro::IO::BinaryDecoder.new(StringIO.new(data))
 end
 
 def encode_avro(schema_string, object)

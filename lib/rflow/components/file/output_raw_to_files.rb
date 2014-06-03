@@ -1,6 +1,5 @@
 require 'eventmachine'
 require 'rflow/component'
-
 require 'digest/md5'
 
 class RFlow
@@ -34,7 +33,6 @@ class RFlow
           # TODO: more error checking of input config
         end
 
-
         def process_message(input_port, input_port_key, connection, message)
           return unless message.data_type_name == 'RFlow::Message::Data::Raw'
 
@@ -62,25 +60,19 @@ class RFlow
           final_output_file_path
         end
 
-
         private
-
-
         def output_file_name
           "#{file_name_prefix}.#{current_timestamp}.#{output_file_entropy_string}#{file_name_suffix}"
         end
-
 
         def output_file_entropy_string
           sprintf("%04d", @output_file_entropy || 1)
         end
 
-
         def current_timestamp
           time = Time.now
           time.utc.strftime("%Y%m%d_%H%M%S.") + "%06d" % time.utc.usec
         end
-
       end
     end
   end

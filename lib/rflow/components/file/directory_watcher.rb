@@ -1,5 +1,4 @@
 require 'rflow/component'
-
 require 'digest/md5'
 
 class RFlow
@@ -38,7 +37,6 @@ class RFlow
           # TODO: more error checking of input config
         end
 
-
         # TODO: optimize sending of messages based on what is connected
         def run!
           timer = EventMachine::PeriodicTimer.new(poll_interval) do
@@ -47,32 +45,30 @@ class RFlow
             # modified file first
             file_paths = Dir.glob(::File.join(@directory_path, @file_name_glob)).sort_by {|f| test(?M, f)}
 
-            file_paths.first(@files_per_poll).each do |file_path|
-              RFlow.logger.debug "Importing #{file_path}"
-              ::File.open(file_path, 'r:BINARY') do |file|
-                file_content = file.read
+            file_paths.first(@files_per_poll).each do |path|
+              RFlow.logger.debug "Importing #{path}"
+              ::File.open(path, 'r:BINARY') do |file|
+                content = file.read
 
-                RFlow.logger.debug "read #{file_content.bytesize} bytes of #{file.size} in #{file.path}, md5 #{Digest::MD5.hexdigest(file_content)}"
+                RFlow.logger.debug "read #{content.bytesize} bytes of #{file.size} in #{file.path}, md5 #{Digest::MD5.hexdigest(content)}"
 
-                file_message = RFlow::Message.new('RFlow::Message::Data::File')
+                file_port.send_message(RFlow::Message.new('RFlow::Message::Data::File').tap do |m|
+                  m.data.path = ::File.expand_path(file.path)
+                  m.data.size = file.size
+                  m.data.content = content
+                  m.data.creation_timestamp = file.ctime
+                  m.data.modification_timestamp = file.mtime
+                  m.data.access_timestamp = file.atime
+                end)
 
-                file_message.data.path = ::File.expand_path(file.path)
-                file_message.data.size = file.size
-                file_message.data.content = file_content
-                file_message.data.creation_timestamp = file.ctime
-                file_message.data.modification_timestamp = file.mtime
-                file_message.data.access_timestamp = file.atime
-
-                file_port.send_message file_message
-
-                raw_message = RFlow::Message.new('RFlow::Message::Data::Raw')
-                raw_message.data.raw = file_content
-                raw_port.send_message raw_message
+                raw_port.send_message(RFlow::Message.new('RFlow::Message::Data::Raw').tap do |m|
+                  m.data.raw = content
+                end)
               end
 
               if @remove_files
-                RFlow.logger.debug "Removing #{::File.join(@directory_path, file_path)}"
-                ::File.delete file_path
+                RFlow.logger.debug "Removing #{::File.join(@directory_path, path)}"
+                ::File.delete path
               end
             end
           end
@@ -80,15 +76,11 @@ class RFlow
 
         def to_boolean(string)
           case string
-          when /^true$/i, '1', true
-            true
-          when /^false/i, '0', false
-            false
-          else
-            raise ArgumentError, "'#{string}' cannot be coerced to a boolean value"
+          when /^true$/i, '1', true; true
+          when /^false/i, '0', false; false
+          else raise ArgumentError, "'#{string}' cannot be coerced to a boolean value"
           end
         end
-
       end
     end
   end

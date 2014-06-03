@@ -1,9 +1,7 @@
-require 'spec_helper.rb'
+require 'spec_helper'
 
 describe 'RFlow::Message::Data::File Avro Schema' do
-  before(:each) do
-    @schema_string = RFlow::Configuration.available_data_types['RFlow::Message::Data::File']['avro']
-  end
+  let(:schema) { RFlow::Configuration.available_data_types['RFlow::Message::Data::File']['avro'] }
 
   it "should encode and decode an object" do
     file = {
@@ -15,14 +13,12 @@ describe 'RFlow::Message::Data::File Avro Schema' do
       'access_timestamp' => 'ACCESSEDTIMESTRING'
     }
 
-    expect {encode_avro(@schema_string, file)}.to_not raise_error
-    avro_encoded_file = encode_avro(@schema_string, file)
+    expect { encode_avro(schema, file) }.to_not raise_error
+    encoded_file = encode_avro(schema, file)
 
-    expect {decode_avro(@schema_string, avro_encoded_file)}.to_not raise_error
-    decoded_file = decode_avro(@schema_string, avro_encoded_file)
+    expect { decode_avro(schema, encoded_file) }.to_not raise_error
+    decoded_file = decode_avro(schema, encoded_file)
 
     decoded_file.should == file
-
   end
 end
-

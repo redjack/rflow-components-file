@@ -20,7 +20,6 @@ class RFlow
       # Load the data extensions
       RFlow::Configuration.add_available_data_extension('RFlow::Message::Data::File',
                                                         RFlow::Components::File::Extensions::FileExtension)
-
     end
   end
 end
