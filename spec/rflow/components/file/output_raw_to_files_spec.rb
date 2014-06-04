@@ -15,7 +15,7 @@ class RFlow
                            'directory_path'   => '/tmp'})
         end
 
-        let(:component) { described_class.new(component_config) }
+        let(:component) { described_class.new(component_config).tap {|c| c.configure!(component_config.options) } }
 
         it "should correctly process file name prefix/suffix" do
           component.send(:output_file_name).should match(/boom.*0001.town/)
