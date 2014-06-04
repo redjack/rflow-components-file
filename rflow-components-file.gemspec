@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'rflow', '~> 1.0.0a1'
+  s.add_dependency 'rflow', '~> 1.0.0a2'
 
   s.add_development_dependency 'rspec', '~> 2.99'
   s.add_development_dependency 'rspec-collection_matchers', '~> 0.0.4'
