@@ -19,6 +19,6 @@ describe 'RFlow::Message::Data::File Avro Schema' do
     expect { decode_avro(schema, encoded_file) }.to_not raise_error
     decoded_file = decode_avro(schema, encoded_file)
 
-    decoded_file.should == file
+    expect(decoded_file).to eq(file)
   end
 end

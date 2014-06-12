@@ -18,7 +18,7 @@ class RFlow
         let(:component) { described_class.new(component_config).tap {|c| c.configure!(component_config.options) } }
 
         it "should correctly process file name prefix/suffix" do
-          component.send(:output_file_name).should match(/boom.*0001.town/)
+          expect(component.send(:output_file_name)).to match(/boom.*0001.town/)
         end
 
         it "should do stuff" do
@@ -28,7 +28,7 @@ class RFlow
 
           output_file_path = component.process_message nil, nil, nil, message
 
-          ::File.exist?(output_file_path).should be true
+          expect(::File.exist?(output_file_path)).to be true
         end
       end
     end

@@ -7,25 +7,25 @@ class RFlow
       module Extensions
         describe FileExtension do
           it "should add the extension to RFlow::Configuration" do
-            Configuration.available_data_extensions['RFlow::Message::Data::File'].should include(described_class)
+            expect(Configuration.available_data_extensions['RFlow::Message::Data::File']).to include(described_class)
           end
 
           it "should set the defaults" do
             file = Message.new('RFlow::Message::Data::File').data.tap do |d|
-              d.path.should == '/'
-              d.size.should == 0
-              d.content.should == ''
-              d.creation_timestamp.should be_nil
-              d.modification_timestamp.should be_nil
-              d.access_timestamp.should be_nil
+              expect(d.path).to eq('/')
+              expect(d.size).to eq(0)
+              expect(d.content).to eq('')
+              expect(d.creation_timestamp).to be_nil
+              expect(d.modification_timestamp).to be_nil
+              expect(d.access_timestamp).to be_nil
             end
           end
 
           it "should correctly use integers or strings for size field" do
             Message.new('RFlow::Message::Data::File').data.tap do |d|
-              d.size.should == 0
+              expect(d.size).to eq(0)
               d.size = 10
-              d.size.should == 10
+              expect(d.size).to eq(10)
               d.size = '20'
               d.size == 20
             end
@@ -34,11 +34,11 @@ class RFlow
           it "should correctly use Time or xmlschema strings for timestamp fields" do
             Message.new('RFlow::Message::Data::File').data.tap do |d|
               now = Time.now
-              d.creation_timestamp.should == nil
+              expect(d.creation_timestamp).to be_nil
               d.creation_timestamp = now
-              d.creation_timestamp.should == Time.xmlschema(now.xmlschema(9))
+              expect(d.creation_timestamp).to eq(Time.xmlschema(now.xmlschema(9)))
               d.creation_timestamp = now.xmlschema
-              d.creation_timestamp.should == Time.xmlschema(now.xmlschema)
+              expect(d.creation_timestamp).to eq(Time.xmlschema(now.xmlschema))
             end
           end
         end
