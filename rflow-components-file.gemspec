@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rflow', '~> 1.0.0a2'
 
   s.add_development_dependency 'rspec', '~> 3.0'
-  s.add_development_dependency 'rspec-collection_matchers', '~> 1.0.0'
-  s.add_development_dependency 'rake', '~> 10.3.2'
+  s.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
+  s.add_development_dependency 'rake', '>= 10.3'
 end
