@@ -1,7 +1,7 @@
 class RFlow
   module Components
     module File
-      VERSION = "1.0.0a2"
+      VERSION = "1.0.0a3"
     end
   end
 end
