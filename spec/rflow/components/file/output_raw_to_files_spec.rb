@@ -4,18 +4,13 @@ class RFlow
   module Components
     module File
       describe OutputRawToFiles do
-        let(:component_config) do
-          OpenStruct.new(:name         => 'port name',
-                         :uuid         => 0,
-                         :input_ports  => [],
-                         :output_ports => [],
-                         :options      => {
-                           'file_name_prefix' => 'boom',
-                           'file_name_suffix' => '.town',
-                           'directory_path'   => '/tmp'})
+        let(:config) do
+          {'file_name_prefix' => 'boom',
+           'file_name_suffix' => '.town',
+           'directory_path'   => '/tmp'}
         end
 
-        let(:component) { described_class.new(component_config).tap {|c| c.configure!(component_config.options) } }
+        let(:component) { described_class.new.tap {|c| c.configure!(config) } }
 
         it "should correctly process file name prefix/suffix" do
           expect(component.send(:output_file_name)).to match(/boom.*0001.town/)
