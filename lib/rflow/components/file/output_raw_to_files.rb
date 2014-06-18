@@ -50,7 +50,7 @@ class RFlow
               file.write(message.data.raw)
             end
             ::File.rename(temp_output_file_path, final_output_file_path)
-            RFlow.logger.debug { "#{self.class.name}##{__method__}: Succesfully output raw message to #{final_output_file_path}" }
+            RFlow.logger.debug { "#{self.class.name}##{__method__}: Successfully output raw message to #{final_output_file_path}" }
           rescue Errno::EEXIST => e
             RFlow.logger.debug { "#{self.class.name}##{__method__}: File #{temp_output_file_path} exists, increasing entropy" }
             @output_file_entropy += 1
