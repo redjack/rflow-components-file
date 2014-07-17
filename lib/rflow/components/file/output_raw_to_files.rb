@@ -43,16 +43,15 @@ class RFlow
             temp_output_file_path = ::File.join(directory_path, ".#{final_output_file_name}")
             final_output_file_path = ::File.join(directory_path, "#{final_output_file_name}")
 
-            RFlow.logger.debug { "#{self.class.name}##{__method__}: Outputting raw message to #{final_output_file_path} (via #{temp_output_file_path}) with #{message.data.raw.bytesize} bytes and md5 #{Digest::MD5.hexdigest message.data.raw}" }
+            RFlow.logger.debug { "#{name}: Outputting raw message to #{final_output_file_path} (via #{temp_output_file_path}) with #{message.data.raw.bytesize} bytes and md5 #{Digest::MD5.hexdigest message.data.raw}" }
 
             ::File.open(temp_output_file_path, ::File::CREAT|::File::EXCL|::File::RDWR, 0644, :external_encoding => 'BINARY') do |file|
               file.flock(::File::LOCK_EX)
               file.write(message.data.raw)
             end
             ::File.rename(temp_output_file_path, final_output_file_path)
-            RFlow.logger.debug { "#{self.class.name}##{__method__}: Successfully output raw message to #{final_output_file_path}" }
           rescue Errno::EEXIST => e
-            RFlow.logger.debug { "#{self.class.name}##{__method__}: File #{temp_output_file_path} exists, increasing entropy" }
+            RFlow.logger.debug { "#{name}: File #{temp_output_file_path} exists, increasing entropy" }
             @output_file_entropy += 1
             retry
           end

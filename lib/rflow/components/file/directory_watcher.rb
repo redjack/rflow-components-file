@@ -40,17 +40,17 @@ class RFlow
         # TODO: optimize sending of messages based on what is connected
         def run!
           timer = EventMachine::PeriodicTimer.new(poll_interval) do
-            RFlow.logger.debug "Polling for files in #{::File.join(@directory_path, @file_name_glob)}"
+            RFlow.logger.debug { "#{name}: Polling for files in #{::File.join(@directory_path, @file_name_glob)}" }
             # Sort by last modified, which will process the earliest
             # modified file first
             file_paths = Dir.glob(::File.join(@directory_path, @file_name_glob)).sort_by {|f| test(?M, f)}
 
             file_paths.first(@files_per_poll).each do |path|
-              RFlow.logger.debug "Importing #{path}"
+              RFlow.logger.debug { "#{name}: Importing #{path}" }
               ::File.open(path, 'r:BINARY') do |file|
                 content = file.read
 
-                RFlow.logger.debug "read #{content.bytesize} bytes of #{file.size} in #{file.path}, md5 #{Digest::MD5.hexdigest(content)}"
+                RFlow.logger.debug { "#{name}: Read #{content.bytesize} bytes of #{file.size} in #{file.path}, md5 #{Digest::MD5.hexdigest(content)}" }
 
                 file_port.send_message(RFlow::Message.new('RFlow::Message::Data::File').tap do |m|
                   m.data.path = ::File.expand_path(file.path)
@@ -67,7 +67,7 @@ class RFlow
               end
 
               if @remove_files
-                RFlow.logger.debug "Removing #{::File.join(@directory_path, path)}"
+                RFlow.logger.debug { "#{name}: Removing #{::File.join(@directory_path, path)}" }
                 ::File.delete path
               end
             end
