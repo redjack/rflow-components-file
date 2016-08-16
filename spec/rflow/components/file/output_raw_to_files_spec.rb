@@ -12,8 +12,13 @@ class RFlow
 
         let(:component) { described_class.new.tap {|c| c.configure!(config) } }
 
-        it "should correctly process file name prefix/suffix" do
-          expect(component.send(:output_file_name)).to match(/boom.*0001.town/)
+        it 'should correctly process file name prefix/suffix when given message properties with no uuid' do
+          expect(component.send(:output_file_name, {})).to match(/boom.*0001.town/)
+        end
+
+        it 'should correctly process file name prefix/suffix when given message properties' do
+          props = { 'data_uuid' => 'uuid' }
+          expect(component.send(:output_file_name, props)).to match(/boom.*\.0001\.uuid\.town/)
         end
 
         it "should do stuff" do
