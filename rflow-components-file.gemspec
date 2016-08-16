@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.bindir        = 'bin'
 
-  s.add_dependency 'rflow', '~> 1.0.0'
+  s.add_dependency 'rflow', '~> 1.0'
 
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
