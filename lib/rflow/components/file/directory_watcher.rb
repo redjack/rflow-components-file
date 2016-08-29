@@ -67,7 +67,7 @@ class RFlow
               end
 
               if @remove_files
-                RFlow.logger.debug { "#{name}: Removing #{::File.join(@directory_path, path)}" }
+                RFlow.logger.debug { "#{name}: Removing #{path}" }
                 ::File.delete path
               end
             end
