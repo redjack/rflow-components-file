@@ -41,9 +41,9 @@ class RFlow
         def run!
           timer = EventMachine::PeriodicTimer.new(poll_interval) do
             RFlow.logger.debug { "#{name}: Polling for files in #{::File.join(@directory_path, @file_name_glob)}" }
-            # Sort by last modified, which will process the earliest
-            # modified file first
-            file_paths = Dir.glob(::File.join(@directory_path, @file_name_glob)).sort_by {|f| test(?M, f)}
+            file_paths = Dir.glob(::File.join(@directory_path, @file_name_glob)).
+              sort_by {|f| test(?M, f)}. # sort by last modified to process the earliest modified file first
+              select {|f| shard.count == 1 || ((f.sum % shard.count) + 1 == worker.index) } # for multiple copies, share the load equally
 
             file_paths.first(@files_per_poll).each do |path|
               RFlow.logger.debug { "#{name}: Importing #{path}" }
