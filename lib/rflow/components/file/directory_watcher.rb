@@ -47,6 +47,15 @@ class RFlow
 
             file_paths.first(@files_per_poll).each do |path|
               RFlow.logger.debug { "#{name}: Importing #{path}" }
+              unless ::File.readable?(path)
+                RFlow.logger.warn "#{name}: Unable to read file #{path}, skipping it"
+                next
+              end
+              if @remove_files && !::File.writable?(path)
+                RFlow.logger.warn "#{name}: Unable to remove file #{path}, skipping it"
+                next
+              end
+
               ::File.open(path, 'r:BINARY') do |file|
                 content = file.read
 
