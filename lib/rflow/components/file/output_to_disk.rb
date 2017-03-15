@@ -30,7 +30,6 @@ class RFlow
         # if passed properties, will look for data_uuid property and use as suffix preamble
         def write_to_file(properties)
           properties ||= {}
-          @output_file_entropy = 1
           begin
             final_output_file_name = output_file_name(properties)
 
@@ -48,11 +47,7 @@ class RFlow
             end
             ::File.rename(temp_output_file_path, final_output_file_path)
             final_output_file_path
-          rescue Errno::EEXIST => e
-            RFlow.logger.debug { "#{self.class}: File #{temp_output_file_path} exists, increasing entropy" }
-            @output_file_entropy += 1
-            retry
-          rescue StandardError => e
+          rescue StandardError, Errno::EEXIST => e
             RFlow.logger.error { "#{self.class} encountered #{e.message} when creating #{temp_output_file_path}" }
             begin
               ::File.delete(temp_output_file_path)
@@ -65,12 +60,8 @@ class RFlow
 
         private
         def output_file_name(properties)
-          uuid = properties['data_uuid']
-          "#{file_name_prefix}.#{current_timestamp}.#{output_file_entropy_string}#{uuid ? ".#{uuid}" : ''}#{file_name_suffix}"
-        end
-
-        def output_file_entropy_string
-          sprintf("%04d", @output_file_entropy || 1)
+          uuid = properties['data_uuid'] || UUIDTools::UUID.random_create.to_s
+          "#{file_name_prefix}.#{current_timestamp}.#{uuid}#{file_name_suffix}"
         end
 
         def current_timestamp
