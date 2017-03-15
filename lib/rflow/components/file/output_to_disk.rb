@@ -1,3 +1,5 @@
+require 'uuidtools'
+
 class RFlow
   module Components
     module File
@@ -61,7 +63,8 @@ class RFlow
         private
         def output_file_name(properties)
           uuid = properties['data_uuid'] || UUIDTools::UUID.random_create.to_s
-          "#{file_name_prefix}.#{current_timestamp}.#{uuid}#{file_name_suffix}"
+          priority = properties['priority'] || 0
+          "#{file_name_prefix}.#{'%03d' % priority}.#{current_timestamp}.#{uuid}#{file_name_suffix}"
         end
 
         def current_timestamp
