@@ -1,9 +1,51 @@
 class RFlow
+  # @!parse
+  #   # Fake classes in this tree to document the actual message types.
+  #   class Message
+  #     # Fake classes in this tree to document the actual message types.
+  #     class Data
+  #       # A message representing a file on disk, including its contents. The file might no longer exist.
+  #       class File
+  #         # @!attribute path
+  #         #   The file's pathname.
+  #         #   @return [String]
+  #
+  #         # @!attribute size
+  #         #   The file's size.
+  #         #   @return [Integer]
+  #
+  #         # @!attribute content
+  #         #   The file's binary content.
+  #         #   @return [String]
+  #
+  #         # @!attribute creation_timestamp
+  #         #   The file's creation timestamp as an XML schema-compatible dateTime string.
+  #         #   @return [String]
+  #
+  #         # @!attribute modification_timestamp
+  #         #   The file's modification timestamp as an XML schema-compatible dateTime string.
+  #         #   @return [String]
+  #
+  #         # @!attribute access_timestamp
+  #         #   The file's access timestamp as an XML schema-compatible dateTime string.
+  #         #   @return [String]
+  #
+  #         # Just here to force Yard to create documentation.
+  #         # @!visibility private
+  #         def initialize; end
+  #       end
+  #     end
+  #   end
+
+  # RFlow component classes.
   module Components
     module File
+      # @!visibility private
       module Extensions
         # Need to be careful when extending to not clobber data already in data_object
+        # @!visibility private
         module FileExtension
+          # @!visibility private
           def self.extended(base_data)
             base_data.data_object ||= {
               'path' => '/', 'size' => 0, 'content' => '',

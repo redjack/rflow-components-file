@@ -4,10 +4,31 @@ require 'digest/md5'
 class RFlow
   module Components
     module File
+      # Component that watches a directory for new files. When it does, it (optionally) deletes them
+      # and sends along +RFlow::Message+s of type {RFlow::Message::Data::File} and +RFlow::Message::Data::Raw+.
+      #
+      # Accepts config parameters:
+      # - +directory_path+ - the directory path to monitor
+      # - +file_name_glob+ - glob of filenames to monitor within +directory_path+
+      # - +poll_interval+ - how often, in seconds, to poll
+      # - +files_per_poll+ - maximum number of files to be brought in per poll
+      # - +remove_files+ - true to remove the files after they've been brought in
       class DirectoryWatcher < RFlow::Component
+        # @!attribute [r] file_port
+        #   Outputs +RFlow::Message+s of type {RFlow::Message::Data::File}
+        #   when detecting a new file in the directory.
+        #
+        #   @return [RFlow::Component::OutputPort]
         output_port :file_port
+        # @!attribute [r] raw_port
+        #   Outputs +RFlow::Message+s of type +RFlow::Message::Data::Raw+
+        #   when detecting a new file in the directory. The raw bytes are just
+        #   the contents of the file.
+        #
+        #   @return [RFlow::Component::OutputPort]
         output_port :raw_port
 
+        # Default config.
         DEFAULT_CONFIG = {
           'directory_path'  => '/tmp/import',
           'file_name_glob'  => '*',
@@ -16,8 +37,11 @@ class RFlow
           'remove_files'    => true,
         }
 
+        # @!visibility private
         attr_accessor :config, :poll_interval, :directory_path, :file_name_glob, :remove_files
 
+        # RFlow-called method at startup.
+        # @return [void]
         def configure!(config)
           @config = DEFAULT_CONFIG.merge config
           @directory_path  = ::File.expand_path(@config['directory_path'])
@@ -37,8 +61,10 @@ class RFlow
           # TODO: more error checking of input config
         end
 
-        # TODO: optimize sending of messages based on what is connected
+        # RFlow-called method at startup.
+        # @return [void]
         def run!
+          # TODO: optimize sending of messages based on what is connected
           timer = EventMachine::PeriodicTimer.new(poll_interval) do
             RFlow.logger.debug { "#{name}: Polling for files in #{::File.join(@directory_path, @file_name_glob)}" }
             file_paths = Dir.glob(::File.join(@directory_path, @file_name_glob)).
@@ -83,6 +109,7 @@ class RFlow
           end
         end
 
+        # @!visibility private
         def to_boolean(string)
           case string
           when /^true$/i, '1', true; true

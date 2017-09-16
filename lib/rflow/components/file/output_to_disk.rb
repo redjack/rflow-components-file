@@ -3,15 +3,29 @@ require 'uuidtools'
 class RFlow
   module Components
     module File
+      # To be included into any component that plans to output files to disk.
+      # Provides default configuration and a {write_to_file} method.
+      #
+      # Best not to depend on the filename other than the prefix and suffix
+      # portions as it is implementation-dependent.
+      #
+      # Mixed-in component will support the following config parameters:
+      # - +directory_path+ - directory to write files into
+      # - +file_name_prefix+ - written files will always begin with this prefix
+      # - +file_name_suffix+ - written files will always end with this suffix
       module OutputToDisk
+        # Default config.
         DEFAULT_CONFIG = {
           'directory_path'  => '/tmp',
           'file_name_prefix' => 'output.',
           'file_name_suffix' => '.out',
         }
 
+        # @!visibility private
         attr_accessor :config, :directory_path, :file_name_prefix, :file_name_suffix
 
+        # RFlow-called method at startup.
+        # @return [void]
         def configure!(config)
           @config = DEFAULT_CONFIG.merge config
           @directory_path  = ::File.expand_path(@config['directory_path'])
@@ -29,7 +43,14 @@ class RFlow
           # TODO: more error checking of input config
         end
 
-        # if passed properties, will look for data_uuid property and use as suffix preamble
+        # Write out a file to disk based on message properties. Filename is implementation-dependent
+        # but will certainly contain the data UUID, priority, filename prefix, suffix, and a timestamp
+        # (properties +data_uuid+, +priority+ plus config variables).
+        #
+        # Opens the file and +yield+s it back to the caller for actual writing. Caller should return
+        # the number of bytes written.
+        #
+        # @return [String] the final output file path
         def write_to_file(properties)
           properties ||= {}
           begin
