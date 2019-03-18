@@ -17,6 +17,4 @@ before_install:
 script: bundle exec rspec spec
 
 notifications:
-  hipchat:
-    rooms:
-      secure: KEo5PyHFl5ZKMwNF3gqw0STQZdvDy36dqth0q+OSbUPO5Th0wEmaHVCBWm0FdauQV1V8fuWd9gfvg/D4UAfMnKSsFsAutV+zJ8WgtMAPcn+Gl3IngUVa8b9EBo3eGRr/GvXkd6R8nUTlgqkZxSRQ6YwJYYENZRuukEJCas1abMA=
+  slack: redjack:FMYKDe4eilb9usdN8BQe5ZMA
